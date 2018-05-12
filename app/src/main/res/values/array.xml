@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="opciones">
+        <item>Todo el publico</item>
+        <item>Campeonato Futbol</item>
+        <item>Campeonato Ping-Pong</item>
+        <item>Baile Folclorico</item>
+        <item>Actividades Universitarias</item>
+        <item>Actividades Comunales</item>
+    </string-array>
+</resources>

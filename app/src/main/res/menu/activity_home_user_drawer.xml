@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/nav_todo"
+            android:icon="@drawable/ic_calendario"
+            android:title="@string/action_calendario_todo" />
+        <item
+            android:id="@+id/nav_futbol"
+            android:icon="@drawable/ic_calendario"
+            android:title="@string/action_calendario_futbol"/>
+
+        <item
+            android:id="@+id/nav_pingpong"
+            android:icon="@drawable/ic_calendario"
+            android:title="@string/action_calendario_pinpong"/>
+
+        <item
+            android:id="@+id/nav_baile"
+            android:icon="@drawable/ic_calendario"
+            android:title="@string/action_calendario_baile" />
+
+        <item
+            android:id="@+id/nav_una"
+            android:icon="@drawable/ic_calendario"
+            android:title="@string/action_calendario_acti_una" />
+
+        <item
+            android:id="@+id/nav_comu"
+            android:icon="@drawable/ic_calendario"
+            android:title="@string/action_calendario_acti_comu" />
+
+        <item
+            android:id="@+id/nav_admin_eventos"
+            android:icon="@drawable/ic_action_register"
+            android:title="@string/action_admin_eventos" />
+    </group>
+
+    <item android:title="@string/message_head">
+        <menu>
+            <!--<item
+                android:id="@+id/nav_register"
+                android:icon="@drawable/ic_register"
+                 android:title="@string/action_register" />
+-->
+            <item
+                android:id="@+id/nav_Salir"
+                android:icon="@drawable/ic_login"
+                android:title="@string/actionSalir" />
+
+        </menu>
+    </item>
+
+</menu>

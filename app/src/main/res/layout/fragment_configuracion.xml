@@ -1,0 +1,87 @@
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="cr.ac.una.asoecas.asoecas.Configuracion">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="@string/configuracion"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="0dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/recorUser"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="77dp" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/btnSave"
+        tools:layout_editor_absoluteX="148dp"
+        tools:layout_editor_absoluteY="409dp"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/colores"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="165dp" />
+
+
+    <RadioGroup
+        android:layout_width="174dp"
+        android:layout_height="134dp">
+
+        <RadioButton
+            android:id="@+id/radioButton"
+            android:layout_width="126dp"
+            android:layout_height="42dp"
+            android:text="Azul"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="106dp"
+            tools:layout_editor_absoluteY="133dp" />
+
+        <RadioButton
+            android:id="@+id/radioButton2"
+            android:layout_width="127dp"
+            android:layout_height="wrap_content"
+            android:text="Verde"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="106dp"
+            tools:layout_editor_absoluteY="261dp" />
+
+        <RadioButton
+            android:id="@+id/radioButton3"
+            android:layout_width="129dp"
+            android:layout_height="wrap_content"
+            android:text="Rojo"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="106dp"
+
+            tools:layout_editor_absoluteY="239dp" />
+    </RadioGroup>
+
+    <Switch
+        android:id="@+id/switch1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Si"
+        android:layout_marginTop="300dp"
+        />
+
+
+
+</android.support.constraint.ConstraintLayout>

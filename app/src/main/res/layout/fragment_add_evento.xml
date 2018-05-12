@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginHorizontal="20dp"
+    android:layout_marginVertical="20dp"
+
+
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Nombre del Evento" />
+
+
+            <EditText
+                android:id="@+id/cajaNombreEvento"
+                style="@style/edicionCampos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:text=""
+
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Descripcion del Evento" />
+
+
+            <EditText
+                android:id="@+id/cajaDescripcionEvento"
+                style="@style/edicionCampos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:text=""
+
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Fecha del Evento" />
+
+            <CalendarView
+                android:id="@+id/cajaEventoFecha"
+                android:layout_width="fill_parent"
+                android:layout_height="300dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                />
+
+
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:id="@+id/textImagen"
+                android:layout_below="@+id/spinnerCarreras"
+                android:layout_marginTop="10dp"
+                android:layout_height="match_parent"
+                android:text="Imagen" />
+
+
+
+            <EditText
+                android:id="@+id/cajaImagenEvento"
+                android:layout_below="@+id/textImagen"
+                android:layout_marginTop="10dp"
+                style="@style/edicionCampos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:text=""
+
+                />
+
+
+
+
+            <EditText
+                android:layout_width="match_parent"
+                android:id="@+id/dirigidoPersona"
+                android:layout_marginTop="10dp"
+                android:layout_height="match_parent"
+                android:focusable="false"
+                android:text="Seleccione el interesado" />
+
+
+            <Switch
+                android:id="@+id/estadoEvento"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Visible" />
+
+
+            <Button
+                android:id="@+id/btn_RegisterEvento"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:text="@string/action_register_Event" />
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

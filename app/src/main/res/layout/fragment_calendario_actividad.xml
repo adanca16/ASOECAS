@@ -1,0 +1,52 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginHorizontal="20dp"
+    android:layout_marginVertical="20dp">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <CalendarView
+                android:id="@+id/calendarView1"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="30dp"
+                />
+
+
+            <TextView
+                android:id="@+id/textoCabecera"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/calendarView1"
+                style="@style/estiloTitulos"
+                android:text="Eventos" />
+
+            <TextView
+                android:id="@+id/textViewEventos"
+                android:layout_width="match_parent"
+                style="@style/showCampos"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="Eventos disponibles"
+                android:layout_marginTop="20dp"
+                android:layout_below="@+id/textoCabecera"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
+
+
+        </RelativeLayout>
+    </ScrollView>
+
+</RelativeLayout>

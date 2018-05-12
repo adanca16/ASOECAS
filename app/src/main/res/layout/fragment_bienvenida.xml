@@ -1,0 +1,31 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="cr.ac.una.asoecas.asoecas.MainActivity">
+
+    <!-- TODO: Update blank fragment layout -->
+    <TextView
+        style="@style/Titulos"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="@string/saludo_Bienvenida" />
+
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="30dp"
+        app:srcCompat="@drawable/icono_aso" />
+
+    <ProgressBar
+        android:id="@+id/BarraProgreso"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center"
+        android:paddingBottom="40dp" />
+
+</FrameLayout>
