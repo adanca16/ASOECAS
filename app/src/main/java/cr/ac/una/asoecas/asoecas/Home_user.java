@@ -1,5 +1,8 @@
 package cr.ac.una.asoecas.asoecas;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -14,14 +17,23 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
+
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
+import cr.ac.una.asoecas.asoecas.data.AsyncTaskLoadImage;
 
 public class Home_user extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
     //Para setear los datos al usuario
     TextView nombreUsuario;
     TextView correoUsuario;
+    ImageView imageViewUsuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,16 +41,14 @@ public class Home_user extends AppCompatActivity
         setContentView(R.layout.activity_home_user);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+    //    FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+     //   fab.setOnClickListener(new View.OnClickListener() {
+        //    @Override
+        //    public void onClick(View view) {
+      //          Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+       //                 .setAction("Action", null).show();
+       //     }
+       // });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.Contenedor_Home);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -48,6 +58,14 @@ public class Home_user extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        nombreUsuario=  (TextView) navigationView.getHeaderView(0).findViewById(R.id.nombreUsuario);
+        nombreUsuario.setText(Usuario_Datos.nombre+" "+Usuario_Datos.apellido);
+        correoUsuario=  (TextView) navigationView.getHeaderView(0).findViewById(R.id.correoUsuario);
+        correoUsuario.setText(Usuario_Datos.correo);
+//Cargo la imagen del usuario
+        imageViewUsuario = (ImageView) navigationView.getHeaderView(0).findViewById(R.id.imageViewProfile);
+        showImageOne();
+
 
         switch (Usuario_Datos.rol){
             case 1:
@@ -65,10 +83,14 @@ public class Home_user extends AppCompatActivity
                 break;
         }
     }
+    public void showImageOne() {
+        String url = Usuario_Datos.imagen;
+        new AsyncTaskLoadImage(imageViewUsuario).execute(url);
+    }
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.Contenedor_Home);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.Contenedor_Inicio);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -86,11 +108,7 @@ public class Home_user extends AppCompatActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
@@ -131,18 +149,15 @@ public class Home_user extends AppCompatActivity
             case R.id.nav_comu:
                 fragemento = new calendario_actividad(6,"Actividades Comunales");
                 break;
-          //  case  R.id.nav_login:
-           //     fragemento = new Login();
-            //    break;
-           /* case  R.id.nav_register:
-                fragemento = new Register();
-                break;
-*/
             case  R.id.nav_admin_eventos:
                 fragemento = new AddEvento();
                 break;
+            case  R.id.nav_Salir:
+                salir();
+                break;
+
             default:
-                fragemento = new Register();
+              //  fragemento = new Register();
                 break;
         }
         if (fragemento != null){
@@ -151,4 +166,12 @@ public class Home_user extends AppCompatActivity
             ft.commit();
         }
     }
+    //metodo para desactivar la actividad
+    private void salir(){
+        finish();
+        System.exit(0);
+
+    }
+
+
 }

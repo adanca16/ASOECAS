@@ -79,13 +79,11 @@
 
             <EditText
                 android:id="@+id/cajaCarrera"
-                style="@style/edicionCampos"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="text"
-                android:text=""
-
-                />
+                android:layout_height="match_parent"
+                android:layout_marginTop="20dp"
+                android:focusable="false"
+                android:text="Seleccione su carrera" />
 
             <TextView
                 android:layout_width="match_parent"

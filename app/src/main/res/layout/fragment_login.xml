@@ -10,6 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="40dp"
+        android:padding="40dp"
         android:orientation="vertical">
 
         <ImageView
@@ -22,24 +23,26 @@
             android:id="@+id/tvUsuario"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Cedula"
-            android:textAlignment="center" />
+            android:layout_marginTop="30dp"
+            android:text="CEDULA"
+            android:textAlignment="gravity" />
 
         <EditText
             android:id="@+id/usuarioCorreo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="textEmailAddress"
+            android:inputType="number"
             android:hint="Ingrese su cedula"
-            android:textAlignment="center" />
+            android:textAlignment="textStart"
+            android:text="503930363"/>
 
         <TextView
             android:id="@+id/tvClave"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="CONTRASEÑA"
-            android:textAlignment="center" />
+            android:textAlignment="gravity" />
 
         <EditText
             android:id="@+id/usuarioClave"
@@ -48,7 +51,8 @@
             android:ems="10"
             android:inputType="textPassword"
             android:hint="Ingrese su contraseña"
-            android:textAlignment="center" />
+            android:textAlignment="textStart"
+            android:text="dn1993"/>
 
         <Button
             android:id="@+id/btnAcceder"

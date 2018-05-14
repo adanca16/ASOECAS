@@ -1,10 +1,13 @@
 package cr.ac.una.asoecas.asoecas;
 
 
+import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,11 +25,13 @@ import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import cr.ac.una.asoecas.asoecas.data.dataWebService;
+
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class Register extends FragmentoAbsPrincipal implements View.OnClickListener {
+public class Register extends FragmentoAbsPrincipal implements View.OnClickListener, View.OnFocusChangeListener {
 
     EditText cajaCedula;
     EditText cajaNombre;
@@ -37,8 +42,8 @@ public class Register extends FragmentoAbsPrincipal implements View.OnClickListe
     EditText cajaImagen;
     EditText cajaClave1;
     EditText cajaClave2;
-
-
+    private dataWebService data;
+    private int actividad;
     Button btnRegistro;
 
     Toast toast;
@@ -56,11 +61,14 @@ public class Register extends FragmentoAbsPrincipal implements View.OnClickListe
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View vista = inflater.inflate(R.layout.fragment_register,container,false);
-
+        actividad = 0;
+        data = new dataWebService();
         cajaCedula = (EditText)vista.findViewById(R.id.cajaCedula);
-         cajaNombre = (EditText)vista.findViewById(R.id.cajaNombre);
-         cajaApellido= (EditText)vista.findViewById(R.id.cajaApellido);
-         cajaCarrera= (EditText)vista.findViewById(R.id.cajaCarrera);
+        //cajaCedula.setOnFocusChangeListener(this);
+        cajaNombre = (EditText)vista.findViewById(R.id.cajaNombre);
+        cajaApellido= (EditText)vista.findViewById(R.id.cajaApellido);
+        cajaCarrera= (EditText)vista.findViewById(R.id.cajaCarrera);
+        cajaCarrera.setOnClickListener(this);
          cajaCorreo= (EditText)vista.findViewById(R.id.cajaCorreo);
          cajaTelefono= (EditText)vista.findViewById(R.id.cajaTelefono);
          cajaImagen= (EditText)vista.findViewById(R.id.cajaImagen);
@@ -77,75 +85,71 @@ public class Register extends FragmentoAbsPrincipal implements View.OnClickListe
     public void onClick(View v) {
         if (v.getId() == R.id.btn_Register) {
           if (validarInput()){
-              new CargarDatosUsuario().execute("https://asoecas.000webhostapp.com/business/actionRegistro.php?operacion=insert&cedula="+cajaCedula.getText().toString()+"&nombre="+cajaNombre.getText().toString()+"&apellido="+cajaApellido.getText().toString()+"&correo="+cajaCorreo.getText().toString()+"&carrera="+cajaCarrera.getText().toString()+"&telefono="+cajaTelefono.getText().toString()+"&imagen="+cajaImagen.getText().toString()+"&clave="+cajaClave1.getText().toString());
+          //    data.execute("https://asoecas.000webhostapp.com/business/actionRegistro.php?operacion=insert&cedula="+cajaCedula.getText().toString()+"&nombre="+cajaNombre.getText().toString()+"&apellido="+cajaApellido.getText().toString()+"&correo="+cajaCorreo.getText().toString()+"&carrera="+actividad+"&telefono="+cajaTelefono.getText().toString()+"&imagen="+cajaImagen.getText().toString()+"&clave="+cajaClave1.getText().toString());
+              data.execute("http://localhost:81/Api-android//business/actionRegistro.php?operacion=insert&cedula="+cajaCedula.getText().toString()+"&nombre="+cajaNombre.getText().toString()+"&apellido="+cajaApellido.getText().toString()+"&correo="+cajaCorreo.getText().toString()+"&carrera="+actividad+"&telefono="+cajaTelefono.getText().toString()+"&imagen="+cajaImagen.getText().toString()+"&clave="+cajaClave1.getText().toString());
+              waitResponce();
           }else{
               toast =Toast.makeText(getContext(), "Verifique los datos", Toast.LENGTH_LONG);
               toast.show();
           }
+        }else if(v.getId() == R.id.cajaCarrera){
+            showDialog();
+       //     Toast.makeText(getContext(),actividad,Toast.LENGTH_LONG).show();
         }
     }
+    private void waitResponce(){
+        Handler Progreso = new Handler();
+        Progreso.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if(!data.obtenerRespuesta().isEmpty()){
+                    if(TextUtils.equals(data.obtenerRespuesta().trim(),"true")){
+                        Toast.makeText(getContext(),"Datos guardados con exito",Toast.LENGTH_SHORT).show();
+                    }else{
+                        Toast.makeText(getContext(),"No hemos podido guardar los datos!"+data.obtenerRespuesta(),Toast.LENGTH_SHORT).show();
+                    }
 
-
-    private class CargarDatosUsuario  extends AsyncTask<String,Void,String> {
-        @Override
-        protected String doInBackground(String... urls) {
-                return downloadUrl(urls[0]);
-        }
-        // onPostExecute displays the results of the AsyncTask.
-        @Override
-        protected void onPostExecute(String result) {
-            if(TextUtils.equals(result.trim(),"true")){
-                toast =Toast.makeText(getContext(), "Datos guardados con exito!", Toast.LENGTH_LONG);
-                toast.show();
-                clearInput();
-            }else{
-                toast =Toast.makeText(getContext(), "No se ha podido guardar la informacion "+result, Toast.LENGTH_LONG);
-                toast.show();
-          //      clearInput();
+                 //   limpiarImput();
+                }else{
+                    waitResponce();
+                }
             }
+        },1000);
+    }
 
-        }
+    public void showDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle("Interesados");
 
-        private String downloadUrl(String myurl) {
-            InputStream is = null;
-            // Only display the first 500 characters of the retrieved
-            // web page content.
-            int len = 500;
+        //list of items
+        final String[] items = getResources().getStringArray(R.array.opciones_carrera);
+        builder.setSingleChoiceItems(items, 0,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        actividad = (Integer)which+1;
+                        cajaCarrera.setText(items[which] );
+                    }
+                });
+        String positiveText = getString(android.R.string.ok);
+        builder.setPositiveButton(positiveText,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
 
-            try {
-                URL url = new URL(myurl);
-                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                conn.setReadTimeout(10000 /* milliseconds */);
-                conn.setConnectTimeout(15000 /* milliseconds */);
-                conn.setRequestMethod("GET");
-                conn.setDoInput(true);
-                // Starts the query
-                conn.connect();
-                int response = conn.getResponseCode();
-                is = conn.getInputStream();
-                Log.d("Respuesta", "The response is: " + response+" contetn As String ");
+                    }
+                });
 
-                // Convert the InputStream into a string
-                String contentAsString = readIt(is, len);
-                Log.d("Respuesta", "The contetn As String " + contentAsString);
-
-                return contentAsString;
-                // Makes sure that the InputStream is closed after the app is
-                // finished using it.
-            }catch (IOException e){
-                toast =Toast.makeText(getContext(), "Error "+e.getMessage(), Toast.LENGTH_SHORT);
-                toast.show();
-            }
-            return myurl;
-        }
-        // Reads an InputStream and converts it to a String.
-        public String readIt(InputStream stream, int len) throws IOException, UnsupportedEncodingException {
-            Reader reader = null;
-            reader = new InputStreamReader(stream, "UTF-8");
-            char[] buffer = new char[len];
-            reader.read(buffer);
-            return new String(buffer);
-        }
+        String negativeText = getString(android.R.string.cancel);
+        builder.setNegativeButton(negativeText,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // negative button logic
+                    }
+                });
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
     private  boolean validarInput(){
         boolean enviar = true;
@@ -186,8 +190,37 @@ public class Register extends FragmentoAbsPrincipal implements View.OnClickListe
         cajaImagen.setText("");
         cajaClave1 .setText("");
         cajaClave2 .setText("");
+    }
+//Metodo para validar si el usuario esta registrado o no
+    @Override
+    public void onFocusChange(View v, boolean hasFocus) {
+        if(!hasFocus){
+        //    data.execute("https://asoecas.000webhostapp.com/business/actionRegistro.php?operacion=verificarUsuario&usuario="+cajaCedula.getText().toString());
+            data.execute("http://127.0.0.1:81/Api-android/business/actionRegistro.php?operacion=verificarUsuario&usuario="+cajaCedula.getText().toString());
 
+            waitResponceUser();
+        }
     }
 
-
+    private void waitResponceUser(){
+        Handler Progreso = new Handler();
+        Progreso.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if(!data.obtenerRespuesta().isEmpty()){
+                    if(Integer.parseInt(data.obtenerRespuesta().trim())==1){
+                        Toast.makeText(getContext(),"El usuario esta registrado",Toast.LENGTH_SHORT).show();
+                        cajaCedula.setText("");
+                    }
+                }else{
+                    if(Integer.parseInt(data.obtenerRespuesta().trim())==0){
+                        Toast.makeText(getContext(),"Cedula no registrada!",Toast.LENGTH_SHORT).show();
+                    }else{
+                        waitResponceUser();
+                    }
+                }
+            }
+        },1000);
+    }
 }
+

@@ -12,12 +12,18 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <TextView
+            style="@style/Titulos"
+            android:layout_width="match_parent"
+            android:layout_height="117dp"
+            android:paddingTop="10dp"
+            android:text="@string/mensaje_Seleccion" />
+
         <ImageView
             android:id="@+id/imageView"
-            android:layout_width="wrap_content"
-            android:layout_height="289dp"
+            android:layout_width="match_parent"
+            android:layout_height="154dp"
             android:layout_gravity="center"
-            android:paddingTop="100dp"
             android:src="@drawable/icono_aso" />
 
 
@@ -26,7 +32,7 @@
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="200dp"
+            android:layout_marginTop="30dp"
             android:layout_marginBottom="30dp"
             android:text="Registrarme" />
 

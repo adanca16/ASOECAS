@@ -14,9 +14,4 @@ public abstract class Usuario_Datos {
     static String  telefono;
     static String  imagen;
     static int  rol;
-
-    public Usuario_Datos(){
-
-    }
-
 }

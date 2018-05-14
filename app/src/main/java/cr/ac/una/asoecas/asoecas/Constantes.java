@@ -5,7 +5,7 @@ package cr.ac.una.asoecas.asoecas;
  */
 
 public interface Constantes {
-    public static final int Tiempo_Espera = 5000;
+    public static final int Tiempo_Espera = 1000;
     static final String EMPTY_STRING = "";
     public static final String TAG_INFO = "INFO";
     public static final String Mispreferencias = "preferecias_practica";

@@ -9,4 +9,13 @@
         <item>Actividades Universitarias</item>
         <item>Actividades Comunales</item>
     </string-array>
+
+    <string-array name="opciones_carrera">
+        <item>Administracion de Empresas</item>
+        <item>Administracion de Oficinas</item>
+        <item>Educacion Rural</item>
+        <item>Colegio Humanistico</item>
+        <item>Ingenieria en Sistemas</item>
+        <item>Recreacion y Turismo</item>
+    </string-array>
 </resources>

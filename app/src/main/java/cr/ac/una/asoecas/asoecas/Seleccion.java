@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +25,6 @@ public class Seleccion extends FragmentoAbsPrincipal implements View.OnClickList
     public Seleccion() {
         // Required empty public constructor
     }
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -58,11 +59,14 @@ public class Seleccion extends FragmentoAbsPrincipal implements View.OnClickList
             Usuario_Datos.carrera = "Null";
             Usuario_Datos.correo = "una@una.una";
             Usuario_Datos.telefono = "2764-0234";
-            Usuario_Datos.imagen = "imagen";
+            //Usuario_Datos.imagen = "https://asoecas.000webhostapp.com/picture/user/icono_default.png";
+            Usuario_Datos.imagen = "http://127.0.0.1:81/Api-android/picture/user/icono_default.png";
+
             Usuario_Datos.rol = 4;
 
-            Intent intent = new Intent (v.getContext(), Home_user.class);
-            startActivity(intent);
+            Intent intentHome = new Intent (v.getContext(), Home_user.class);
+            startActivity(intentHome);
+
 
         }
         if (v.getId() == R.id.btnLogin_main){
