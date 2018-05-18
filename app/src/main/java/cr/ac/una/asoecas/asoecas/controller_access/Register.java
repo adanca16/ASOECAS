@@ -19,13 +19,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.frosquivel.magicalcamera.MagicalCamera;
-import com.frosquivel.magicalcamera.MagicalPermissions;
-
-import java.util.Map;
 
 import cr.ac.una.asoecas.asoecas.R;
-import cr.ac.una.asoecas.asoecas.Upload_image;
 import cr.ac.una.asoecas.asoecas.data.dataWebService;
 import cr.ac.una.asoecas.asoecas.model.FragmentoAbsPrincipal;
 
@@ -52,8 +47,6 @@ public class Register extends FragmentoAbsPrincipal implements View.OnClickListe
     Button btnRegistro;
 ///Propiedades para la camara
     String path;
-     MagicalPermissions magicalPermissions;
-     MagicalCamera magicalCamera;
      private final static int RESIZE_PHOTO_PIXELS_PERCENTAGE = 50;
     Toast toast;
     public Register() {
@@ -100,8 +93,6 @@ public class Register extends FragmentoAbsPrincipal implements View.OnClickListe
                 Manifest.permission.ACCESS_COARSE_LOCATION,
                 Manifest.permission.ACCESS_FINE_LOCATION
         };
-        magicalPermissions = new MagicalPermissions(this, permissions);
-        magicalCamera = new MagicalCamera(getActivity(),RESIZE_PHOTO_PIXELS_PERCENTAGE, magicalPermissions);
 
         return vista;
     }
@@ -122,47 +113,10 @@ public class Register extends FragmentoAbsPrincipal implements View.OnClickListe
        //     Toast.makeText(getContext(),actividad,Toast.LENGTH_LONG).show();
         } else if(v.getId() == R.id.btnImagen){
             //Lanzo la camara
-            new Upload_image();
+         //   new Upload_image();
             //magicalCamera.takePhoto();
     }
     }
-// Metodo para obtener la respuesta que genero la camara..
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        Map<String, Boolean> map = magicalPermissions.permissionResult(requestCode, permissions, grantResults);
-        for (String permission : map.keySet()) {
-            Log.e("PERMISSIONS", permission + " was: " + map.get(permission));
-        }
-        //Following the example you could also
-        //locationPermissions(requestCode, permissions, grantResults);
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-//Para saber si el resultado optenido tuvo exito!!!!
-        //if(resultCode==RESULT_OK) {
-            //CALL THIS METHOD EVER
-            magicalCamera.resultPhoto(requestCode, resultCode, data);
-            //this is for rotate picture in this method
-            //magicalCamera.resultPhoto(requestCode, resultCode, data, MagicalCamera.ORIENTATION_ROTATE_180);
-
-            //with this form you obtain the bitmap (in this example set this bitmap in image view)
-            imagenUsuario.setImageBitmap(magicalCamera.getPhoto());
-
-            //if you need save your bitmap in device use this method and return the path if you need this
-            //You need to send, the bitmap picture, the photo name, the directory name, the picture type, and autoincrement photo name if           //you need this send true, else you have the posibility or realize your standard name for your pictures.
-            path = magicalCamera.savePhotoInMemoryDevice(magicalCamera.getPhoto(), "Adan", "ASOECAS", MagicalCamera.JPEG, true);
-
-            if (path != null) {
-                Toast.makeText(getContext(), "The photo is save in device, please check this path: " + path, Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(getContext(), "Sorry your photo dont write in devide, please contact with fabian7593@gmail and say this error", Toast.LENGTH_SHORT).show();
-            }
-            Toast.makeText(getContext(), "Sorry your photo dont write in devide, please contact with fabian7593@gmail and say this error", Toast.LENGTH_SHORT).show();
-       // }
-    }
-
 
     private void waitResponce(){
         Handler Progreso = new Handler();

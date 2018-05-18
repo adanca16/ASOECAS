@@ -9,10 +9,8 @@ import android.webkit.WebView;
 import android.widget.Button;
 // Activity.getFragmentManager
 
-import cr.ac.una.asoecas.asoecas.Upload_image;
+import cr.ac.una.asoecas.asoecas.Camera;
 import cr.ac.una.asoecas.asoecas.controller.Home_user;
-import cr.ac.una.asoecas.asoecas.controller_access.Login;
-import cr.ac.una.asoecas.asoecas.controller_access.Register;
 import cr.ac.una.asoecas.asoecas.model.FragmentoAbsPrincipal;
 import cr.ac.una.asoecas.asoecas.model.FragmentoActividadAbsPrincipal;
 import cr.ac.una.asoecas.asoecas.R;
@@ -23,6 +21,7 @@ public class Seleccion extends FragmentoAbsPrincipal implements View.OnClickList
     Button accederGuest;
     Button accederLogin;
     Button registro;
+    Button camara;
 
     WebView webViewSeleccion;
 
@@ -44,10 +43,11 @@ public class Seleccion extends FragmentoAbsPrincipal implements View.OnClickList
         accederGuest = (Button) vista.findViewById(R.id.btnInvitado_main);
         accederLogin = (Button) vista.findViewById(R.id.btnLogin_main);
         registro = (Button) vista.findViewById(R.id.btnRegister_main);
-
+        camara = (Button)vista.findViewById(R.id.btnCamara);
         accederGuest.setOnClickListener(this);
         accederLogin.setOnClickListener(this);
         registro.setOnClickListener(this);
+        camara.setOnClickListener(this);
 /*
         webViewSeleccion = (WebView) vista.findViewById(R.id.webViewSeleccion);
         webViewSeleccion.getSettings().setJavaScriptEnabled(true);
@@ -61,8 +61,8 @@ public class Seleccion extends FragmentoAbsPrincipal implements View.OnClickList
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.btnRegister_main){
-            //((FragmentoActividadAbsPrincipal) getActivity()).agregueFragmentoAPila(new Register());
-            ((FragmentoActividadAbsPrincipal) getActivity()).agregueFragmentoAPila(new Upload_image());
+            ((FragmentoActividadAbsPrincipal) getActivity()).agregueFragmentoAPila(new Register());
+       //     ((FragmentoActividadAbsPrincipal) getActivity()).agregueFragmentoAPila(new Upload_image());
         }
         if (v.getId() == R.id.btnInvitado_main){
             Usuario_Datos.id= "invitado";
@@ -83,6 +83,10 @@ public class Seleccion extends FragmentoAbsPrincipal implements View.OnClickList
         }
         if (v.getId() == R.id.btnLogin_main){
             ((FragmentoActividadAbsPrincipal) getActivity()).agregueFragmentoAPila(new Login());
+        }
+
+        if (v.getId() == R.id.btnCamara){
+            ((FragmentoActividadAbsPrincipal) getActivity()).agregueFragmentoAPila(new Camera());
         }
     }
 }

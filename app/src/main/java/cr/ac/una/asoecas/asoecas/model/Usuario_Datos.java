@@ -6,7 +6,7 @@ package cr.ac.una.asoecas.asoecas.model;
 
 public abstract class Usuario_Datos {
 
-    public static String  id;
+    public static String  id ;
     public static String  nombre;
     public static String  apellido;
     public static String  carrera;
