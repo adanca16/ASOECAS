@@ -74,6 +74,35 @@
 
     </style>
 
+    <!--Estilos de Pablo-->
+
+
+    <!--Etiqueta flotante-->
+    <style name="AppTheme.FloatingLabel" parent="@android:style/TextAppearance">
+        <item name="android:textColor">@color/teal</item>
+        <item name="android:textSize">@dimen/floating_label</item>
+    </style>
+
+
+    <!--Campo de texto-->
+    <style name="AppTheme.EditText" parent="AppTheme">
+        <!-- cursor y línea normal-->
+        <item name="colorControlNormal">@color/indigo</item>
+        <!-- cursor y línea con foco-->
+        <item name="colorControlActivated">@color/teal</item>
+    </style>
+
+    <!-- mensaje de error debajo del EditText-->
+    <style name="AppTheme.EditTextError" parent="@android:style/TextAppearance">
+        <item name="android:textColor">@color/orange</item>
+        <item name="android:textSize">@dimen/error</item>
+    </style>
+
+    <style name="AppTheme.CharacterCounter" parent="TextAppearance.AppCompat.Small">
+        <item name="android:textColor">@color/teal</item>
+    </style>
+
+
 
 </resources>
 
