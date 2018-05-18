@@ -1,15 +1,20 @@
 package cr.ac.una.asoecas.asoecas.controller_access;
 //Linea para la importacion de V4
+import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import android.support.design.widget.TextInputEditText;
+import android.support.design.widget.TextInputLayout;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -27,14 +32,25 @@ import cr.ac.una.asoecas.asoecas.model.Usuario_Datos;
 /**
  Fragemento para realizar el login o acceso al sistema.
  */
-public class Login extends FragmentoAbsPrincipal implements View.OnClickListener{
+public class Login extends FragmentoAbsPrincipal implements View.OnClickListener,View.OnFocusChangeListener{
     Button acceder;
     EditText usuario;
     EditText clave;
     TextView nombreUsuario;
     private dataWebService data;
     private View vista;
+
+    private TextInputLayout text_input_usuario;
+    private TextInputLayout text_input_contra;
+
+    private TextInputEditText cajaUsuario;
+    private TextInputEditText cajaContra;
+
+    private boolean verificar;
+
+
     public Login() {
+        verificar = true;
     }
 
     @Override
@@ -49,28 +65,74 @@ public class Login extends FragmentoAbsPrincipal implements View.OnClickListener
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         this.vista = inflater.inflate(R.layout.fragment_login,container,false);
         data = new dataWebService(getActivity());
-        usuario = (EditText) vista.findViewById(R.id.usuarioCorreo);
+
         acceder = (Button) vista.findViewById(R.id.btnAcceder);
         acceder.setOnClickListener(this);
+
+        //PABLO
+        text_input_usuario = (TextInputLayout) vista.findViewById(R.id.text_input_usuario);
+        cajaUsuario = (TextInputEditText) vista.findViewById(R.id.usuarioCorreo);
+
+        text_input_contra = (TextInputLayout) vista.findViewById(R.id.text_input_contra);
+        cajaContra = (TextInputEditText) vista.findViewById(R.id.usuarioClave);
+        /////
+
         return vista;
+    }
+    private void secondValidate(){
+        cajaUsuario.setOnFocusChangeListener(this);
+        cajaContra.setOnFocusChangeListener(this);
+    }
+    public void validate(View vista) {
+        verificar = true;
+        String userError = null;
+        if (TextUtils.isEmpty(cajaUsuario.getText())) {
+            verificar = false;
+            userError = getString(R.string.mandatory);
+        }
+        toggleTextInputLayoutError(text_input_usuario, userError);
+
+        String passError = null;
+        if (TextUtils.isEmpty(cajaContra.getText())) {
+            verificar = false;
+            passError = getString(R.string.mandatory);
+        }
+        toggleTextInputLayoutError(text_input_contra, passError);
+
+        clearFocus(vista);
+    }
+
+    private static void toggleTextInputLayoutError(@NonNull TextInputLayout textInputLayout,
+                                                   String msg) {
+        textInputLayout.setError(msg);
+        if (msg == null) {
+            textInputLayout.setErrorEnabled(false);
+        } else {
+            textInputLayout.setErrorEnabled(true);
+        }
+    }
+
+    private void clearFocus(View view) {
+        view = getActivity().getCurrentFocus();
+        if (view != null && view instanceof EditText) {
+            InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(Context
+                    .INPUT_METHOD_SERVICE);
+            inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+            view.clearFocus();
+        }
     }
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.btnAcceder){
-            if(TextUtils.isEmpty(usuario.getText().toString())){
-                Toast.makeText(getContext(), "Debes ingresar un usuario!!!", Toast.LENGTH_LONG).show();
-            }else{
-                if(TextUtils.isEmpty(clave.getText().toString())){
-                    Toast.makeText(getContext(), "Debes ingresar una contraseña!!!", Toast.LENGTH_LONG).show();
+            secondValidate();
+            validate(v);
+            if(verificar){
+                //   data.execute("http://127.0.0.1:81/Api-android/business/actionRegistro.php?operacion=login&usuario="+usuario.getText().toString()+"&contrasena="+clave.getText().toString());
+                if(data.isOnlineNetTrue()){
+                    data.execute("https://asoecas.000webhostapp.com/business/actionRegistro.php?operacion=login&usuario="+cajaUsuario.getText().toString()+"&contrasena="+cajaContra.getText().toString());
+                    waitResponce();
                 }else{
-                 //   data.execute("http://127.0.0.1:81/Api-android/business/actionRegistro.php?operacion=login&usuario="+usuario.getText().toString()+"&contrasena="+clave.getText().toString());
-                    if(data.isOnlineNetTrue()){
-                        data.execute("https://asoecas.000webhostapp.com/business/actionRegistro.php?operacion=login&usuario="+usuario.getText().toString()+"&contrasena="+clave.getText().toString());
-                        waitResponce();
-                    }else{
-                        Toast.makeText(getContext(),"No hay conexion a internet",Toast.LENGTH_LONG).show();
-                    }
-
+                    Toast.makeText(getContext(),"No hay conexion a internet",Toast.LENGTH_LONG).show();
                 }
             }
         }
@@ -118,5 +180,13 @@ public class Login extends FragmentoAbsPrincipal implements View.OnClickListener
         }
     }
 
-
+    @Override
+    public void onFocusChange(View v, boolean hasFocus) {
+        if(!hasFocus){
+            validate(v);
+        }
+        if(v.getId() == R.id.usuarioCorreo && !hasFocus && cajaUsuario.getText().length()<9){
+            cajaUsuario.setText("");
+        }
+    }
 }
