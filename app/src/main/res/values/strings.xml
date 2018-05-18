@@ -11,7 +11,7 @@
     <string name="error_field_required">This field is required</string>
     <string name="permission_rationale">Contacts completions.</string>
 
-    <string name="saludo_Bienvenida">Bienvenidos a ASOECAS.</string>
+    <string name="saludo_Bienvenida">Hola Mundo</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
