@@ -2,6 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="cr.ac.una.asoecas.asoecas.controller_access.Login">
 
     <!-- TODO: Update blank fragment layout -->
@@ -20,48 +21,58 @@
             android:layout_gravity="center"
             android:src="@mipmap/ic_person_login" />
 
-        <TextView
-            android:id="@+id/tvUsuario"
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/text_input_usuario"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:text="CEDULA"
-            android:textAlignment="gravity" />
+            android:layout_marginTop="@dimen/form_margin_top"
+            android:hint="@string/usuario"
 
-        <EditText
-            android:id="@+id/usuarioCorreo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="number"
-            android:hint="Ingrese su cedula"
-            android:textAlignment="textStart"
-            android:text="503930363"/>
+            app:errorTextAppearance="@style/AppTheme.EditTextError"
+            app:hintTextAppearance="@style/AppTheme.FloatingLabel"
 
-        <TextView
-            android:id="@+id/tvClave"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="CONTRASEÑA"
-            android:textAlignment="gravity" />
+            app:counterEnabled="true"
+            app:counterMaxLength="9"
+            app:counterOverflowTextAppearance="@style/AppTheme.CharacterCounter"
 
-        <EditText
-            android:id="@+id/usuarioClave"
+            >
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/usuarioCorreo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:maxLength="9"
+                android:theme="@style/AppTheme.EditText" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/text_input_contra"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPassword"
-            android:hint="Ingrese su contraseña"
-            android:textAlignment="textStart"
-            android:text="dn1993"/>
+            android:layout_marginTop="@dimen/form_margin_top"
+            android:hint="@string/contra"
+            app:errorTextAppearance="@style/AppTheme.EditTextError"
+            app:hintTextAppearance="@style/AppTheme.FloatingLabel">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/usuarioClave"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:theme="@style/AppTheme.EditText" />
+        </android.support.design.widget.TextInputLayout>
 
         <Button
             android:id="@+id/btnAcceder"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Acceder" />
-
-
-
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="@dimen/form_margin_top"
+            android:text="@string/btnLogin"
+            android:background="@drawable/button"
+            />
     </LinearLayout>
 </FrameLayout>
+
+

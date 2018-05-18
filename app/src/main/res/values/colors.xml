@@ -1,6 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Adan Colores
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#1f34b8</color>
     <color name="colorAccent">#FF4081</color>
+    -->
+
+    <!--Colores de Pablo-->
+
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#ff0057</color>
+
+    <item name="primary" type="color">#9a28a1</item>
+    <item name="primaryDark" type="color">#5c1760</item>
+    <item name="indigo" type="color">#303F9F</item>
+    <item name="teal" type="color">#009688</item>
+    <item name="orange" type="color">#FF5722</item>
+
 </resources>
