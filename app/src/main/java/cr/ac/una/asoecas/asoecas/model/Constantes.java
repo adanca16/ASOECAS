@@ -1,4 +1,4 @@
-package cr.ac.una.asoecas.asoecas;
+package cr.ac.una.asoecas.asoecas.model;
 
 /**
  * Created by ADAN on 08/05/2018.

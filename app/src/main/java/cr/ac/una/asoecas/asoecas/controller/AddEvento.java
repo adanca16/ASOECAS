@@ -1,4 +1,4 @@
-package cr.ac.una.asoecas.asoecas;
+package cr.ac.una.asoecas.asoecas.controller;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -21,7 +21,9 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+import cr.ac.una.asoecas.asoecas.R;
 import cr.ac.una.asoecas.asoecas.data.dataWebService;
+import cr.ac.una.asoecas.asoecas.model.Usuario_Datos;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -50,7 +52,7 @@ import cr.ac.una.asoecas.asoecas.data.dataWebService;
         Calendar fecha = new GregorianCalendar();
         fechaActividad = fecha.get(Calendar.YEAR)+"-"+(fecha.get(Calendar.MONTH)+1)+"-"+fecha.get(Calendar.DAY_OF_MONTH);
         fechaActual = fechaActividad;
-        data = new dataWebService();
+        data = new dataWebService(getActivity());
     }
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {

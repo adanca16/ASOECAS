@@ -1,5 +1,6 @@
 package cr.ac.una.asoecas.asoecas.data;
 
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.support.v7.app.AlertDialog;
@@ -22,10 +23,29 @@ import cr.ac.una.asoecas.asoecas.R;
 
 public class dataWebService extends AsyncTask<String,Void,String> {
     String resultado ;
-
-    public dataWebService(){
+    boolean haveConection;
+    public dataWebService(Activity activity){
+        haveConection = isOnlineNet();
         resultado = "";
     }
+
+    public Boolean isOnlineNetTrue() {
+        return haveConection;
+    }
+    public Boolean isOnlineNet() {
+
+        try {
+            Process p = java.lang.Runtime.getRuntime().exec("ping -c 1 www.google.es");
+            int val           = p.waitFor();
+            boolean reachable = (val == 0);
+            return reachable;
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return false;
+    }
+
     @Override
     protected String doInBackground(String... urls) {
         return downloadUrl(urls[0]);

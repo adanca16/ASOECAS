@@ -1,4 +1,4 @@
-package cr.ac.una.asoecas.asoecas;
+package cr.ac.una.asoecas.asoecas.model;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;

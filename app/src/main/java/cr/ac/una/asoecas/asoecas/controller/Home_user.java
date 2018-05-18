@@ -1,32 +1,24 @@
-package cr.ac.una.asoecas.asoecas;
+package cr.ac.una.asoecas.asoecas.controller;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Rect;
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.squareup.picasso.Picasso;
-
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.URL;
-
+import cr.ac.una.asoecas.asoecas.R;
+import cr.ac.una.asoecas.asoecas.controller_access.Bienvenida;
 import cr.ac.una.asoecas.asoecas.data.AsyncTaskLoadImage;
+import cr.ac.una.asoecas.asoecas.model.Usuario_Datos;
 
 public class Home_user extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -34,21 +26,13 @@ public class Home_user extends AppCompatActivity
     TextView nombreUsuario;
     TextView correoUsuario;
     ImageView imageViewUsuario;
-
+    TextView telefonoUsuario;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_user);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-    //    FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-     //   fab.setOnClickListener(new View.OnClickListener() {
-        //    @Override
-        //    public void onClick(View view) {
-      //          Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-       //                 .setAction("Action", null).show();
-       //     }
-       // });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.Contenedor_Home);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -62,9 +46,11 @@ public class Home_user extends AppCompatActivity
         nombreUsuario.setText(Usuario_Datos.nombre+" "+Usuario_Datos.apellido);
         correoUsuario=  (TextView) navigationView.getHeaderView(0).findViewById(R.id.correoUsuario);
         correoUsuario.setText(Usuario_Datos.correo);
+        telefonoUsuario = (TextView) navigationView.getHeaderView(0).findViewById(R.id.telefonoUsuario);
+        telefonoUsuario.setText("+506 "+Usuario_Datos.telefono);
 //Cargo la imagen del usuario
         imageViewUsuario = (ImageView) navigationView.getHeaderView(0).findViewById(R.id.imageViewProfile);
-        showImageOne();
+        showImageUser();
 
 
         switch (Usuario_Datos.rol){
@@ -83,7 +69,7 @@ public class Home_user extends AppCompatActivity
                 break;
         }
     }
-    public void showImageOne() {
+    public void showImageUser() {
         String url = Usuario_Datos.imagen;
         new AsyncTaskLoadImage(imageViewUsuario).execute(url);
     }
@@ -91,6 +77,7 @@ public class Home_user extends AppCompatActivity
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.Contenedor_Inicio);
+
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -98,36 +85,19 @@ public class Home_user extends AppCompatActivity
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.home_user, menu);
 
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    @SuppressWarnings("StatementWithEmptyBody")
+  @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-
         displaySelectScreen(item.getItemId());
+        //Ocultar el menu lateral de la izquierda
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.Contenedor_Home);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 
     private void displaySelectScreen(int id){
+        Toast.makeText(getApplicationContext(),"Id cliqueado "+id, Toast.LENGTH_LONG).show();
         Fragment fragemento = null;
 
         switch (id){
@@ -160,14 +130,17 @@ public class Home_user extends AppCompatActivity
               //  fragemento = new Register();
                 break;
         }
-        if (fragemento != null){
+       // if (fragemento != null){
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.replace(R.id.Contenedor_Home,fragemento);
             ft.commit();
-        }
+       // }
     }
     //metodo para desactivar la actividad
     private void salir(){
+        Toast.makeText(getApplicationContext(),"Saliendo",Toast.LENGTH_LONG).show();
+        Intent intent = new Intent (getApplicationContext(), Bienvenida.class);
+        startActivity(intent);
         finish();
         System.exit(0);
 

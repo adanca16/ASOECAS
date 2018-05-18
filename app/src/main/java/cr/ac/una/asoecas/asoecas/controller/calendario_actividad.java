@@ -1,8 +1,10 @@
-package cr.ac.una.asoecas.asoecas;
+package cr.ac.una.asoecas.asoecas.controller;
 
 import android.annotation.SuppressLint;
+import android.nfc.Tag;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -10,11 +12,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CalendarView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -25,6 +29,9 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+
+import cr.ac.una.asoecas.asoecas.R;
+import cr.ac.una.asoecas.asoecas.data.dataWebService;
 
 /**
  * Created by ADAN on 24/04/2018.
@@ -39,9 +46,12 @@ public class calendario_actividad extends Fragment {
 
     Toast toast;
     CalendarView calender;
-    // TextView textview;
+
+    ProgressBar BarraProgresoEvento;
+
     String fechaActividad;
     TextView textViewEventos;
+
 
     int actividad;
     String tituloFragmento;
@@ -56,68 +66,86 @@ public class calendario_actividad extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         getActivity().setTitle(tituloFragmento);//Agrego un titulo al fragemento
     }
+    @SuppressLint("WrongConstant")
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View vista = inflater.inflate(R.layout.fragment_calendario_actividad,container,false);
         calender = (CalendarView) vista.findViewById(R.id.calendarView1);
 
+        BarraProgresoEvento = (ProgressBar) vista.findViewById(R.id.BarraProgresoEvento);
+        cargandoHide();
         textViewEventos =(TextView)vista.findViewById(R.id.textViewEventos);//Caja para los evenetos
 
         Calendar fecha = new GregorianCalendar();
         fechaActividad = fecha.get(Calendar.YEAR)+"-"+(fecha.get(Calendar.MONTH)+1)+"-"+fecha.get(Calendar.DAY_OF_MONTH);
-
+      //  showEventDay();
         new ConsultarDatosEventos().execute("https://asoecas.000webhostapp.com/business/actionEvento.php?operacion=select&fecha="+fechaActividad+"&actividad="+actividad);
 
         calender.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(CalendarView view, int year, int month,
                                             int dayOfMonth) {
-                cargando();
+                cargandoShow();
                 // TODO Auto-generated method stub
                 fechaActividad = year+"-"+(month+1)+"-"+dayOfMonth;
+               // showEventDay();
                 new ConsultarDatosEventos().execute("https://asoecas.000webhostapp.com/business/actionEvento.php?operacion=select&fecha="+fechaActividad+"&actividad="+actividad);
+
 
             }
         });
         return  vista;
     }
-    private void  cargando(){
 
+
+    @SuppressLint("WrongConstant")
+    private void  cargandoShow(){
+        BarraProgresoEvento.setVisibility(0);
     }
+
+    @SuppressLint("WrongConstant")
+    private void  cargandoHide(){
+        BarraProgresoEvento.setVisibility(4);
+    }
+
     private class ConsultarDatosEventos  extends AsyncTask<String,Void,String> {
         @Override
         protected String doInBackground(String... urls) {
             return downloadUrl(urls[0]);
         }
         // onPostExecute displays the results of the AsyncTask.
+        @SuppressLint("WrongConstant")
         @Override
         // onPostExecute displays the results of the AsyncTask.
         protected void onPostExecute(String result) {
             String salida = "No hay eventos para el dia ".toUpperCase()+fechaActividad;
+
+            JSONArray array = null;
             try {
-                JSONArray array = new JSONArray(result);
+                array = new JSONArray(result);
                 if(array.length()!=0){
                     salida = "";
+                    JSONObject jsonObject = null;
+                    Toast.makeText(getContext(),"Valor del array: "+array.toString(),Toast.LENGTH_LONG).show();
                     for (int i = 0 ; i < array.length();i++){
-                        JSONObject jsonObject = array.getJSONObject(i);
+                        jsonObject = array.getJSONObject(i);
                         salida+= "\t\t"+jsonObject.getString("nombre").toUpperCase().replace('^',' ')+"\n\n";
                         salida+= "Descripcion: "+jsonObject.getString("descripcion").replace('^',' ')+"\n";
                         salida+= "Creado por: "+jsonObject.getString("nombreUsuario").replace('^',' ')+"\n\n\n";
                     }
                 }
-                textViewEventos.setText(salida);
             } catch (Exception e) {
                 toast =Toast.makeText(getContext(), "Error "+e.getMessage(), Toast.LENGTH_LONG);
-                //toast =Toast.makeText(getContext(), "Error "+result, Toast.LENGTH_LONG);
                 toast.show();
-                e.printStackTrace();
             }
+            textViewEventos.setText(salida);
+            cargandoHide();
         }
 
         private String downloadUrl(String myurl) {
             InputStream is = null;
             // Only display the first 500 characters of the retrieved
             // web page content.
-            int len = 500;
+            int len = 100;
             try {
                 URL url = new URL(myurl);
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();

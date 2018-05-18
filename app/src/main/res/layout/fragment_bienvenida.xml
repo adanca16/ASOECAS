@@ -6,8 +6,10 @@
     tools:context="cr.ac.una.asoecas.asoecas.MainActivity">
 
     <!-- TODO: Update blank fragment layout -->
+
     <TextView
         style="@style/Titulos"
+        android:paddingTop="40dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:text="@string/saludo_Bienvenida" />

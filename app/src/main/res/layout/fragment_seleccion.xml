@@ -2,30 +2,32 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="20dp"
-    tools:context="cr.ac.una.asoecas.asoecas.Login">
+
+    tools:context="cr.ac.una.asoecas.asoecas.controller_access.Login">
 
     <!-- TODO: Update blank fragment layout -->
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:padding="20dp"
         android:orientation="vertical">
+
 
         <TextView
             style="@style/Titulos"
             android:layout_width="match_parent"
-            android:layout_height="117dp"
-            android:paddingTop="10dp"
+            android:layout_height="60dp"
             android:text="@string/mensaje_Seleccion" />
 
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="match_parent"
-            android:layout_height="154dp"
-            android:layout_gravity="center"
-            android:src="@drawable/icono_aso" />
 
+        <ImageView
+            android:id="@+id/imageViewSeleccion"
+            android:layout_width="wrap_content"
+            android:layout_height="200dp"
+            android:layout_gravity="center"
+            android:background="@drawable/icono_aso"
+            android:visibility="visible" />
 
         <Button
             android:id="@+id/btnRegister_main"
@@ -51,6 +53,7 @@
             android:layout_gravity="center"
             android:layout_height="wrap_content"
             android:text="Iniciar Session" />
+
 
 
     </LinearLayout>

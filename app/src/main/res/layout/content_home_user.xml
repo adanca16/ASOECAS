@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="cr.ac.una.asoecas.asoecas.Home_user"
+    tools:context="cr.ac.una.asoecas.asoecas.controller.Home_user"
     tools:showIn="@layout/app_bar_home_user">
 
 </android.support.constraint.ConstraintLayout>

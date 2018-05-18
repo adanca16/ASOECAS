@@ -1,11 +1,12 @@
-package cr.ac.una.asoecas.asoecas;
+package cr.ac.una.asoecas.asoecas.model;
 
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+
+import cr.ac.una.asoecas.asoecas.R;
 
 /**
  * Created by LM-772 on 19/03/2018.

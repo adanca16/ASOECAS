@@ -1,18 +1,12 @@
-package cr.ac.una.asoecas.asoecas;
+package cr.ac.una.asoecas.asoecas.controller_access;
 //Linea para la importacion de V4
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Handler;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,24 +16,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.io.UnsupportedEncodingException;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.Objects;
-
+import cr.ac.una.asoecas.asoecas.R;
+import cr.ac.una.asoecas.asoecas.controller.Home_user;
 import cr.ac.una.asoecas.asoecas.data.dataWebService;
+import cr.ac.una.asoecas.asoecas.model.FragmentoAbsPrincipal;
+import cr.ac.una.asoecas.asoecas.model.Usuario_Datos;
 
 /**
  Fragemento para realizar el login o acceso al sistema.
  */
-public class Login extends FragmentoAbsPrincipal implements View.OnClickListener {
+public class Login extends FragmentoAbsPrincipal implements View.OnClickListener{
     Button acceder;
     EditText usuario;
     EditText clave;
@@ -52,15 +40,16 @@ public class Login extends FragmentoAbsPrincipal implements View.OnClickListener
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        getActivity().setTitle("Acceso al sistema");
+
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         this.vista = inflater.inflate(R.layout.fragment_login,container,false);
-        data = new dataWebService();
+        data = new dataWebService(getActivity());
         usuario = (EditText) vista.findViewById(R.id.usuarioCorreo);
-        clave = (EditText) vista.findViewById(R.id.usuarioClave);
         acceder = (Button) vista.findViewById(R.id.btnAcceder);
         acceder.setOnClickListener(this);
         return vista;
@@ -74,10 +63,14 @@ public class Login extends FragmentoAbsPrincipal implements View.OnClickListener
                 if(TextUtils.isEmpty(clave.getText().toString())){
                     Toast.makeText(getContext(), "Debes ingresar una contraseña!!!", Toast.LENGTH_LONG).show();
                 }else{
-                    //http://127.0.0.1:81/Api-android/
-                    data.execute("http://127.0.0.1:81/Api-android/business/actionRegistro.php?operacion=login&usuario="+usuario.getText().toString()+"&contrasena="+clave.getText().toString());
-                    //data.execute("https://asoecas.000webhostapp.com/business/actionRegistro.php?operacion=login&usuario="+usuario.getText().toString()+"&contrasena="+clave.getText().toString());
-                    waitResponce();
+                 //   data.execute("http://127.0.0.1:81/Api-android/business/actionRegistro.php?operacion=login&usuario="+usuario.getText().toString()+"&contrasena="+clave.getText().toString());
+                    if(data.isOnlineNetTrue()){
+                        data.execute("https://asoecas.000webhostapp.com/business/actionRegistro.php?operacion=login&usuario="+usuario.getText().toString()+"&contrasena="+clave.getText().toString());
+                        waitResponce();
+                    }else{
+                        Toast.makeText(getContext(),"No hay conexion a internet",Toast.LENGTH_LONG).show();
+                    }
+
                 }
             }
         }
@@ -124,5 +117,6 @@ public class Login extends FragmentoAbsPrincipal implements View.OnClickListener
             e.printStackTrace();
         }
     }
+
 
 }
