@@ -11,7 +11,7 @@
     <string name="error_field_required">This field is required</string>
     <string name="permission_rationale">Contacts completions.</string>
 
-    <string name="saludo_Bienvenida">Hola Mundo</string>
+    <string name="saludo_Bienvenida">Bienvenidos a ASOECAS.</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -53,4 +53,28 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+    <!--PArte Pablo-->
+    <string name="cedula">Cédula</string>
+    <string name="nombre">Nombre</string>
+    <string name="apellido">Apellidos</string>
+    <string name="carrera">Carrera</string>
+    <string name="telefono">Teléfono</string>
+
+    <string name="btnLogin">Iniciar sesión</string>
+
+    <string name="usuario">Usuario</string>
+    <string name="contra">Contraseña</string>
+
+    <string name="selectcarrera">Seleccione una carrera</string>
+    <string name="email">Email</string>
+    <string name="text">Text</string>
+    <string name="contrasena1">Contraseña</string>
+    <string name="contrasena2">Repita la contraseña</string>
+    <string name="validate">Registrarme</string>
+    <string name="mandatory">Este campo es requerido</string>
+    <string name="differentPass">Las contraseñas son diferentes</string>
+
+    <!-- -->
 </resources>
